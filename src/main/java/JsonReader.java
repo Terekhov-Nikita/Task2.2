@@ -1,3 +1,5 @@
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,6 +10,7 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class JsonReader {
     private static String readAll(final Reader rd) throws IOException {
@@ -34,7 +37,7 @@ public class JsonReader {
     static String encodeParams(final Map<String, String> params) {
         StringJoiner joiner = new StringJoiner("&");
         final String paramsUrl = Joiner.on('&').join(// получаем значение вида key1=value1&key2=value2...
-                Iterables.transform(params.entrySet(), (Function<Map.Entry<String, String>, String>) input -> {
+                Iterables.transform(params.entrySet(), input -> {
                     try {
                         final StringBuffer buffer = new StringBuffer();
                         buffer.append(input.getKey());// получаем значение вида key=value
